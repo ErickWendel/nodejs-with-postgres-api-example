@@ -1,0 +1,27 @@
+{
+  "name": "docker-registry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2-docker lib/index.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "erickwendel",
+  "license": "ISC",
+  "dependencies": {
+    "@types/hapi": "^15.0.2",
+    "@types/joi": "^13.0.5",
+    "@types/sequelize": "^4.27.20",
+    "hapi": "^15.2.0",
+    "hapi-swagger": "^7.10.0",
+    "inert": "^4.2.1",
+    "joi": "^13.1.2",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.9",
+    "vision": "^4.1.1"
+  }
+}

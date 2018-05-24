@@ -1,6 +1,9 @@
 ## Node.js with Postgres Example
 
-<img src=https://i.imgur.com/eDNZeqh.png alt='Swagger Page of that application' title='Swagger Page of that application'/>
+<img
+    src="https://i.imgur.com/jUeBAiH.png"
+    alt="Swagger Page of that application"
+    title="Swagger Page of that application" />
 
 ### Requirements
 

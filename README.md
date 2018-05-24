@@ -7,7 +7,7 @@
 
 ### Requirements
 
-* Node.js v8+ or Docker and Docker Comp
+* Node.js v8+ or Docker and Docker Compose
 * Postgres running on local instance or Docker
 
 ### Running on localMachine

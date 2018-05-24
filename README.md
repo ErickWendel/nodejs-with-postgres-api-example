@@ -22,6 +22,8 @@
 
 ### OR: Alternatives on pulling from Docker hub
 
+* Docker hub image: [erickwendel/nodejs-with-postgres-api-example](https://hub.docker.com/r/erickwendel/nodejs-with-postgres-api-example/)
+
 ```shell
 docker run -d -p 5432:5432 --name postgres \
     --env POSTGRES_PASSWORD=mysecretpassword \

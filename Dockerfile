@@ -1,11 +1,14 @@
 FROM node:10-alpine
 
-RUN mkdir -p src/
+RUN mkdir -p /src
 
-COPY . src/
+COPY package.json src/package.json
+COPY package-lock.json src/package-lock.json
 
 WORKDIR /src
 
-RUN npm i 
+RUN npm install --only=production
+
+COPY . /src
 
 CMD npm start

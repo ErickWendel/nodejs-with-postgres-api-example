@@ -19,7 +19,13 @@ const server = new Hapi.Server(
     );
   }
   const sequelize = new Sequelize(
-    `postgres://${process.env.POSTGRES_HOST}/heroes`,
+    `postgres://${process.env.POSTGRES_HOST}/${process.env.POSTGRES_DB || "heroes"}`,
+    {
+      ssl: process.env.POSTGRES_SSL,
+      dialectOptions: {
+        ssl: process.env.POSTGRES_SSL,
+      }, 
+    }
   );
   await sequelize.authenticate();
   console.log("postgres is running");

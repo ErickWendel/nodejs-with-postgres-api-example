@@ -12,8 +12,7 @@
 
 ### Running on localMachine
 
-* Install dependencies - `sudo npm i -g typescript pm2 && npm i`
-* Build typescript - `npm run build`
+* Install dependencies - `npm i`
 * Run project - `npm start`
 
 ### OR: Docker

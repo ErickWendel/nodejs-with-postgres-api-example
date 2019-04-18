@@ -1,13 +1,16 @@
-import * as Hapi from "hapi";
-import * as Joi from "joi";
-import * as Sequelize from "sequelize";
-
+const Joi =require('joi')
+const Sequelize =require('sequelize')
+const Hapi = require('hapi');
 const Inert = require("inert");
 const Vision = require("vision");
 const HapiSwagger = require("hapi-swagger");
-const server = new Hapi.Server();
 const port = process.env.PORT || 3000;
-server.connection({ port });
+const server = new Hapi.Server(
+  {
+    port
+  }
+);
+
 
 (async () => {
   if (!process.env.POSTGRES_HOST) {
@@ -32,24 +35,24 @@ server.connection({ port });
     Inert,
     Vision,
     {
-      register: HapiSwagger,
+      plugin: HapiSwagger,
       options: {
         info: {
           title: "Node.js with Postgres Example - Erick Wendel",
           version: "1.0",
-        },
       },
-    },
+      }
+  },
   ]);
 
   server.route([
     {
       method: "GET",
       path: "/heroes",
+      handler: () => {
+        return Hero.findAll();
+      },
       config: {
-        handler: (req: any, reply: any) => {
-          return reply(Hero.findAll());
-        },
         description: "List All heroes",
         notes: "heroes from database",
         tags: ["api"],
@@ -59,9 +62,9 @@ server.connection({ port });
       method: "POST",
       path: "/heroes",
       config: {
-        handler: (req, reply) => {
+        handler: (req) => {
           const { payload } = req;
-          return reply(Hero.create(payload));
+          return Hero.create(payload);
         },
         description: "Create a hero",
         notes: "create a hero",
@@ -79,8 +82,8 @@ server.connection({ port });
       method: "DELETE",
       path: "/heroes/{id}",
       config: {
-        handler: (req, reply) => {
-          return reply(Hero.destroy({ where: { id: req.params.id } }));
+        handler: (req) => {
+          return Hero.destroy({ where: { id: req.params.id } });
         },
         description: "Delete a hero",
         notes: "Delete a hero",

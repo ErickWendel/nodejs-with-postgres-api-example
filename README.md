@@ -35,6 +35,7 @@ docker run -p 3000:3000 \
     --link postgres:postgres \
     -e POSTGRES_HOST=postgres:mysecretpassword@postgres:5432 \
     -e POSTGRES_DB=heroes \
+    -e POSTGRES_SSL=false \
     erickwendel/nodejs-with-postgres-api-example:latest
 ```
 

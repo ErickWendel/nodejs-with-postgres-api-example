@@ -6,7 +6,7 @@ COPY package.json src/package.json
 
 WORKDIR /src
 
-RUN npm install --only=production
+RUN npm install --only=production --silent
 
 COPY . /src
 

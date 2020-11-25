@@ -1,5 +1,5 @@
-const Joi =require('joi')
-const Sequelize =require('sequelize')
+const Joi = require('joi')
+const Sequelize = require('sequelize')
 const Hapi = require('hapi');
 const Inert = require("inert");
 const Vision = require("vision");
@@ -11,6 +11,10 @@ const server = new Hapi.Server(
   }
 );
 
+const failAction = async (request, h, err) => {
+  console.error('err', err)
+  throw err;
+}
 
 (async () => {
   if (!process.env.POSTGRES_HOST) {
@@ -24,7 +28,7 @@ const server = new Hapi.Server(
       ssl: process.env.POSTGRES_SSL,
       dialectOptions: {
         ssl: process.env.POSTGRES_SSL,
-      }, 
+      },
     }
   );
   await sequelize.authenticate();
@@ -46,9 +50,9 @@ const server = new Hapi.Server(
         info: {
           title: "Node.js with Postgres Example - Erick Wendel",
           version: "1.0",
-      },
+        },
       }
-  },
+    },
   ]);
 
   server.route([
@@ -65,6 +69,18 @@ const server = new Hapi.Server(
       },
     },
     {
+      method: "GET",
+      path: "/heroes/{id}",
+      handler: (req) => {
+        return Hero.findAll({ where: { id: req.params.id } });
+      },
+      config: {
+        description: "Get a hero",
+        notes: "heroes from database",
+        tags: ["api"],
+      },
+    },
+    {
       method: "POST",
       path: "/heroes",
       config: {
@@ -76,9 +92,34 @@ const server = new Hapi.Server(
         notes: "create a hero",
         tags: ["api"],
         validate: {
+          failAction,
+
           payload: {
             name: Joi.string().required(),
             power: Joi.string().required(),
+          },
+        },
+      },
+    },
+    {
+      method: "PUT",
+      path: "/heroes/{id}",
+      config: {
+        handler: (req) => {
+          const { payload } = req;
+          return Hero.update(payload, { where: { id: req.params.id } });
+        },
+        description: "Create a hero",
+        notes: "create a hero",
+        tags: ["api"],
+        validate: {
+          failAction,
+          params: {
+            id: Joi.string().required(),
+          },
+          payload: {
+            name: Joi.string(),
+            power: Joi.string(),
           },
         },
       },
@@ -95,6 +136,7 @@ const server = new Hapi.Server(
         notes: "Delete a hero",
         tags: ["api"],
         validate: {
+          failAction,
           params: {
             id: Joi.string().required(),
           },
